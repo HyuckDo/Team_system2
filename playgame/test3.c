@@ -13,7 +13,8 @@
 #define ITEM 100
 
 int SCORE=0;
-int TIME=200;
+int TIME=100;
+int SCORE_COUNTER=0;
 
 char map[MAP_X][MAP_Y]={};
 char map1[MAP_X][MAP_Y] ={
@@ -247,6 +248,7 @@ int check (int x, int y){
 void getscore(int x,int y){
 	char buf[10];
 	if(map[x][y]=='2'){
+		SCORE_COUNTER++;
 		SCORE=SCORE+100;
 		map[x][y]='0';
 		move(30, 40);
@@ -323,177 +325,172 @@ int main(void){
 	srand(time(NULL));
 	selectmap();
 	
-	initscr();
-	clear();
-	makescore();
-	draw();
-	signal (SIGALRM, gettime);
-	set_ticker(500);
-	
 	int num;
-
-
-        while(1){
 
 
                 printf("======= Game World ========\n");
                 printf("1.Game Start\n");
                 printf("2.Explain Game\n");
+                printf("3.Exit Game\n");
                 printf("===========================\n");
 
-                scanf("%d", &num);
+                num=cgetch()-48;
 
                 switch(num){
 
-                        case 1:{ 
-				x=25;
-        			y=1;
-     				ax=x;
-        			ay=y;
-   			    	srand(time(NULL));
-        			selectmap();
+                case 1:{ 
 
-       				initscr();
-        			clear();
-        			makescore();
-        			draw();
-        			signal (SIGALRM, gettime);
-        			set_ticker(500);
+initscr();
+clear();
+makescore();
+draw();
+signal (SIGALRM, gettime);
+set_ticker(1000);
 
-        		
-
-
-				for(int i=1;i;i++){
-					if(TIME<0)
-						break;	
-  	     			a=cgetch();
-        			b=cgetch();
-        			c=cgetch();
- 				switch(c){
-				case 67:{
-					y++;
-					if(check(x,y)){
-						y--;
-					SCORE=SCORE-50;
-					move(30, 40);
-	        			addstr("SCORE:                ");
-					move(30, 40);
-	        			addstr("SCORE: ");
-					sprintf(buf,"%d", SCORE);
-       					addstr(buf);        
-					refresh();
-					break;
-					}
-         				move(ax,ay);
-        				addstr(" ");
-					getscore(x,y);
-         				move(x,y);
-					ax=x;
-					ay=y;
-         				addstr("O");
-         				refresh();
-					break;
-        				}
- 				case 68:{
-					y--;
-					if(check(x,y)){
-						y++;
-					SCORE=SCORE-50;
-					move(30, 40);
-			        	addstr("SCORE:                ");
-					move(30, 40);
-	        			addstr("SCORE: ");
-					sprintf(buf,"%d", SCORE);
-		       			addstr(buf);        
-					refresh();
-					break;
-					}
-			
-         				move(ax,ay);
-        				addstr(" ");
-					getscore(x,y);
-         				move(x,y);
-					ax=x;
-					ay=y;
-         				addstr("O");
-         				refresh();
-					break;
-                		}
-	 			case 65:{
-					x--;
-					if(check(x,y)){
-						x++;
-					SCORE=SCORE-50;
-					move(30, 40);
-	        			addstr("SCORE:                ");
-					move(30, 40);
-	        			addstr("SCORE: ");
-					sprintf(buf,"%d", SCORE);
-       					addstr(buf);        
-					refresh();
-					break;
-					}
-			
-         				move(ax,ay);
-        				addstr(" ");
-					getscore(x,y);
-         				move(x,y);
-					ax=x;
-					ay=y;
-         				addstr("O");
-         				refresh();
-					break;
-                		}
-				case 66:{
-					x++;
-					if(check(x,y)){
-						x--;
-					SCORE=SCORE-50;
-					move(30, 40);
-	        			addstr("SCORE:                ");
-					move(30, 40);
-	        			addstr("SCORE: ");
-					sprintf(buf,"%d", SCORE);
-       					addstr(buf);        
-					refresh();
-					break;
-					}
-				
-         				move(ax,ay);
-        				addstr(" ");
-					getscore(x,y);
-         				move(x,y);
-					ax=x;
-					ay=y;
-         				addstr("O");
-         				refresh();
-					break;
-				 	}
-			}	
-			
-
-			clear();
-			move(20, 40);
-			addstr("SCORE: ");
-			sprintf(buf,"%d", SCORE);
-			addstr(buf);    
-			move(21, 40);
-			addstr("Want quit? please press 'q'");
-			refresh();
-			for(int i=1;i;i++){	
-        			a=cgetch();
-				if(a=='q')
-					break;
-			}	
-
-
-			endwin();
-			break;
-
+ for(int i=1;i;i++){
+	if(TIME<0)
+		break;
+	if(SCORE_COUNTER>=ITEM){
+		TIME=0;		
+		break;	
+	}
+         a=cgetch();
+         b=cgetch();
+         c=cgetch();
+ switch(c){
+	 case 67:{
+		y++;
+		if(check(x,y)){
+			y--;
+		SCORE=SCORE-50;
+		move(30, 40);
+	        addstr("SCORE:                ");
+		move(30, 40);
+	        addstr("SCORE: ");
+		sprintf(buf,"%d", SCORE);
+       		addstr(buf);        
+		refresh();
+		break;
 		}
-		case 2: 
-			printf("2");
+         	move(ax,ay);
+        	addstr(" ");
+		getscore(x,y);
+         	move(x,y);
+		ax=x;
+		ay=y;
+         	addstr("O");
+         	refresh();
+		 break;
+        	 }
+ 	case 68:{
+		y--;
+		if(check(x,y)){
+			y++;
+		SCORE=SCORE-50;
+		move(30, 40);
+	        addstr("SCORE:                ");
+		move(30, 40);
+	        addstr("SCORE: ");
+		sprintf(buf,"%d", SCORE);
+       		addstr(buf);        
+		refresh();
 			break;
+		}
+		
+         	move(ax,ay);
+        	addstr(" ");
+		getscore(x,y);
+         	move(x,y);
+		ax=x;
+		ay=y;
+         	addstr("O");
+         	refresh();
+		 break;
+                }
+	 case 65:{
+		x--;
+		if(check(x,y)){
+			x++;
+		SCORE=SCORE-50;
+		move(30, 40);
+	        addstr("SCORE:                ");
+		move(30, 40);
+	        addstr("SCORE: ");
+		sprintf(buf,"%d", SCORE);
+       		addstr(buf);        
+		refresh();
+			break;
+		}
+		
+         	move(ax,ay);
+        	addstr(" ");
+		getscore(x,y);
+         	move(x,y);
+		ax=x;
+		ay=y;
+         	addstr("O");
+         	refresh();
+		 break;
+                }
+	case 66:{
+		x++;
+		if(check(x,y)){
+			x--;
+		SCORE=SCORE-50;
+		move(30, 40);
+	        addstr("SCORE:                ");
+		move(30, 40);
+	        addstr("SCORE: ");
+		sprintf(buf,"%d", SCORE);
+       		addstr(buf);        
+		refresh();
+			break;
+		}
+		
+         	move(ax,ay);
+        	addstr(" ");
+		getscore(x,y);
+         	move(x,y);
+		ax=x;
+		ay=y;
+         	addstr("O");
+         	refresh();
+		 break;
+		 }
+	}
+ }
+
+clear();
+move(20, 40);
+addstr("SCORE: ");
+sprintf(buf,"%d", SCORE);
+addstr(buf);    
+move(21, 40);
+addstr("Want quit? please press 'q'");
+refresh();
+for(int i=1;i;i++){	
+         a=cgetch();
+	if(a=='q')
+		break;
+}
+
+
+endwin();
+
+
+
+
+			}
+		case 2: 
+			printf("1. move key is arrow key\n"); 
+			printf("2. move 'O' and if you get 'X' you get 100 score\n"); 
+			printf("3. if you hit '#' score -50 \n");
+			printf("4. if you get all 'X' or time out game over \n");
+			break;
+		case 3: 
+			exit(1);
+			break;
+		
 	}
 
 	return 0;
