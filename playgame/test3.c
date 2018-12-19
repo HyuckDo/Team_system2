@@ -247,8 +247,10 @@ int check (int x, int y){
 void getscore(int x,int y){
 	char buf[10];
 	if(map[x][y]=='2'){
-		SCORE++;
+		SCORE=SCORE+100;
 		map[x][y]='0';
+		move(30, 40);
+	        addstr("SCORE:                ");
 		move(30, 40);
 	        addstr("SCORE: ");
 		sprintf(buf,"%d", SCORE);
@@ -262,14 +264,15 @@ void getscore(int x,int y){
 void gettime(int signum){
 	char buf[10];
 	TIME--;
+	if(TIME>-1){
+	move(29, 40);
+	addstr("TIME:      ");   
 	move(29, 40);
 	addstr("TIME: ");
 	sprintf(buf,"%d", TIME);
        	addstr(buf);        
 	refresh();
-
-	move(29, 40);
-	addstr("TIME:      ");   
+	}
 	return;
 }
 
@@ -311,8 +314,12 @@ int main(void){
 
  int a,b,c;
  int x, y;
+int ax,ay;
+char buf[10];
  x=25;
 y=1;
+ax=x;
+ay=y;
 srand(time(NULL));
 selectmap();
 
@@ -322,8 +329,10 @@ makescore();
 draw();
 signal (SIGALRM, gettime);
 set_ticker(100);
- for(int i=1;i;i++){
 
+ for(int i=1;i;i++){
+	if(TIME<0)
+		break;	
          a=cgetch();
          b=cgetch();
          c=cgetch();
@@ -332,63 +341,121 @@ set_ticker(100);
 		y++;
 		if(check(x,y)){
 			y--;
-			break;
+		SCORE=SCORE-50;
+		move(30, 40);
+	        addstr("SCORE:                ");
+		move(30, 40);
+	        addstr("SCORE: ");
+		sprintf(buf,"%d", SCORE);
+       		addstr(buf);        
+		refresh();
+		break;
 		}
+         	move(ax,ay);
+        	addstr(" ");
 		getscore(x,y);
          	move(x,y);
+		ax=x;
+		ay=y;
          	addstr("O");
          	refresh();
-         	move(x,y);
-        	 addstr(" ");
 		 break;
         	 }
  	case 68:{
 		y--;
 		if(check(x,y)){
 			y++;
+		SCORE=SCORE-50;
+		move(30, 40);
+	        addstr("SCORE:                ");
+		move(30, 40);
+	        addstr("SCORE: ");
+		sprintf(buf,"%d", SCORE);
+       		addstr(buf);        
+		refresh();
 			break;
 		}
+		
+         	move(ax,ay);
+        	addstr(" ");
 		getscore(x,y);
          	move(x,y);
-                addstr("O");
-                refresh();
-         	move(x,y);
-                addstr(" ");
-		break;
+		ax=x;
+		ay=y;
+         	addstr("O");
+         	refresh();
+		 break;
                 }
 	 case 65:{
 		x--;
 		if(check(x,y)){
 			x++;
+		SCORE=SCORE-50;
+		move(30, 40);
+	        addstr("SCORE:                ");
+		move(30, 40);
+	        addstr("SCORE: ");
+		sprintf(buf,"%d", SCORE);
+       		addstr(buf);        
+		refresh();
 			break;
 		}
+		
+         	move(ax,ay);
+        	addstr(" ");
 		getscore(x,y);
          	move(x,y);
-                addstr("O");
-                refresh();
-         	move(x,y);
-                addstr(" ");
-		break;
+		ax=x;
+		ay=y;
+         	addstr("O");
+         	refresh();
+		 break;
                 }
 	case 66:{
 		x++;
 		if(check(x,y)){
 			x--;
+		SCORE=SCORE-50;
+		move(30, 40);
+	        addstr("SCORE:                ");
+		move(30, 40);
+	        addstr("SCORE: ");
+		sprintf(buf,"%d", SCORE);
+       		addstr(buf);        
+		refresh();
 			break;
 		}
+		
+         	move(ax,ay);
+        	addstr(" ");
 		getscore(x,y);
          	move(x,y);
-                addstr("O");
-                refresh();
-         	move(x,y);
-                addstr(" ");
-		break;
+		ax=x;
+		ay=y;
+         	addstr("O");
+         	refresh();
+		 break;
 		 }
-}
+	}
  }
- 
+
+clear();
+move(20, 40);
+addstr("SCORE: ");
+sprintf(buf,"%d", SCORE);
+addstr(buf);    
+move(21, 40);
+addstr("Want quit? please press 'q'");
+refresh();
+for(int i=1;i;i++){	
+         a=cgetch();
+	if(a=='q')
+		break;
+}
+
 
 endwin();
+
 
 return 0;
 }
