@@ -312,154 +312,189 @@ void makescore(){
 
 int main(void){
 
- int a,b,c;
- int x, y;
-int ax,ay;
-char buf[10];
- x=25;
-y=1;
-ax=x;
-ay=y;
-srand(time(NULL));
-selectmap();
+	int a,b,c;
+	int x, y;
+	int ax,ay;
+	char buf[10];
+	x=25;
+	y=1;
+	ax=x;
+	ay=y;
+	srand(time(NULL));
+	selectmap();
+	
+	initscr();
+	clear();
+	makescore();
+	draw();
+	signal (SIGALRM, gettime);
+	set_ticker(500);
+	
+	int num;
 
-initscr();
-clear();
-makescore();
-draw();
-signal (SIGALRM, gettime);
-set_ticker(100);
 
- for(int i=1;i;i++){
-	if(TIME<0)
-		break;	
-         a=cgetch();
-         b=cgetch();
-         c=cgetch();
- switch(c){
-	 case 67:{
-		y++;
-		if(check(x,y)){
-			y--;
-		SCORE=SCORE-50;
-		move(30, 40);
-	        addstr("SCORE:                ");
-		move(30, 40);
-	        addstr("SCORE: ");
-		sprintf(buf,"%d", SCORE);
-       		addstr(buf);        
-		refresh();
-		break;
-		}
-         	move(ax,ay);
-        	addstr(" ");
-		getscore(x,y);
-         	move(x,y);
-		ax=x;
-		ay=y;
-         	addstr("O");
-         	refresh();
-		 break;
-        	 }
- 	case 68:{
-		y--;
-		if(check(x,y)){
-			y++;
-		SCORE=SCORE-50;
-		move(30, 40);
-	        addstr("SCORE:                ");
-		move(30, 40);
-	        addstr("SCORE: ");
-		sprintf(buf,"%d", SCORE);
-       		addstr(buf);        
-		refresh();
+        while(1){
+
+
+                printf("======= Game World ========\n");
+                printf("1.Game Start\n");
+                printf("2.Explain Game\n");
+                printf("===========================\n");
+
+                scanf("%d", &num);
+
+                switch(num){
+
+                        case 1:{ 
+				x=25;
+        			y=1;
+     				ax=x;
+        			ay=y;
+   			    	srand(time(NULL));
+        			selectmap();
+
+       				initscr();
+        			clear();
+        			makescore();
+        			draw();
+        			signal (SIGALRM, gettime);
+        			set_ticker(500);
+
+        		
+
+
+				for(int i=1;i;i++){
+					if(TIME<0)
+						break;	
+  	     			a=cgetch();
+        			b=cgetch();
+        			c=cgetch();
+ 				switch(c){
+				case 67:{
+					y++;
+					if(check(x,y)){
+						y--;
+					SCORE=SCORE-50;
+					move(30, 40);
+	        			addstr("SCORE:                ");
+					move(30, 40);
+	        			addstr("SCORE: ");
+					sprintf(buf,"%d", SCORE);
+       					addstr(buf);        
+					refresh();
+					break;
+					}
+         				move(ax,ay);
+        				addstr(" ");
+					getscore(x,y);
+         				move(x,y);
+					ax=x;
+					ay=y;
+         				addstr("O");
+         				refresh();
+					break;
+        				}
+ 				case 68:{
+					y--;
+					if(check(x,y)){
+						y++;
+					SCORE=SCORE-50;
+					move(30, 40);
+			        	addstr("SCORE:                ");
+					move(30, 40);
+	        			addstr("SCORE: ");
+					sprintf(buf,"%d", SCORE);
+		       			addstr(buf);        
+					refresh();
+					break;
+					}
+			
+         				move(ax,ay);
+        				addstr(" ");
+					getscore(x,y);
+         				move(x,y);
+					ax=x;
+					ay=y;
+         				addstr("O");
+         				refresh();
+					break;
+                		}
+	 			case 65:{
+					x--;
+					if(check(x,y)){
+						x++;
+					SCORE=SCORE-50;
+					move(30, 40);
+	        			addstr("SCORE:                ");
+					move(30, 40);
+	        			addstr("SCORE: ");
+					sprintf(buf,"%d", SCORE);
+       					addstr(buf);        
+					refresh();
+					break;
+					}
+			
+         				move(ax,ay);
+        				addstr(" ");
+					getscore(x,y);
+         				move(x,y);
+					ax=x;
+					ay=y;
+         				addstr("O");
+         				refresh();
+					break;
+                		}
+				case 66:{
+					x++;
+					if(check(x,y)){
+						x--;
+					SCORE=SCORE-50;
+					move(30, 40);
+	        			addstr("SCORE:                ");
+					move(30, 40);
+	        			addstr("SCORE: ");
+					sprintf(buf,"%d", SCORE);
+       					addstr(buf);        
+					refresh();
+					break;
+					}
+				
+         				move(ax,ay);
+        				addstr(" ");
+					getscore(x,y);
+         				move(x,y);
+					ax=x;
+					ay=y;
+         				addstr("O");
+         				refresh();
+					break;
+				 	}
+			}	
+			
+
+			clear();
+			move(20, 40);
+			addstr("SCORE: ");
+			sprintf(buf,"%d", SCORE);
+			addstr(buf);    
+			move(21, 40);
+			addstr("Want quit? please press 'q'");
+			refresh();
+			for(int i=1;i;i++){	
+        			a=cgetch();
+				if(a=='q')
+					break;
+			}	
+
+
+			endwin();
 			break;
+
 		}
-		
-         	move(ax,ay);
-        	addstr(" ");
-		getscore(x,y);
-         	move(x,y);
-		ax=x;
-		ay=y;
-         	addstr("O");
-         	refresh();
-		 break;
-                }
-	 case 65:{
-		x--;
-		if(check(x,y)){
-			x++;
-		SCORE=SCORE-50;
-		move(30, 40);
-	        addstr("SCORE:                ");
-		move(30, 40);
-	        addstr("SCORE: ");
-		sprintf(buf,"%d", SCORE);
-       		addstr(buf);        
-		refresh();
+		case 2: 
+			printf("2");
 			break;
-		}
-		
-         	move(ax,ay);
-        	addstr(" ");
-		getscore(x,y);
-         	move(x,y);
-		ax=x;
-		ay=y;
-         	addstr("O");
-         	refresh();
-		 break;
-                }
-	case 66:{
-		x++;
-		if(check(x,y)){
-			x--;
-		SCORE=SCORE-50;
-		move(30, 40);
-	        addstr("SCORE:                ");
-		move(30, 40);
-	        addstr("SCORE: ");
-		sprintf(buf,"%d", SCORE);
-       		addstr(buf);        
-		refresh();
-			break;
-		}
-		
-         	move(ax,ay);
-        	addstr(" ");
-		getscore(x,y);
-         	move(x,y);
-		ax=x;
-		ay=y;
-         	addstr("O");
-         	refresh();
-		 break;
-		 }
 	}
- }
 
-clear();
-move(20, 40);
-addstr("SCORE: ");
-sprintf(buf,"%d", SCORE);
-addstr(buf);    
-move(21, 40);
-addstr("Want quit? please press 'q'");
-refresh();
-for(int i=1;i;i++){	
-         a=cgetch();
-	if(a=='q')
-		break;
+	return 0;
 }
-
-
-endwin();
-
-
-return 0;
-}
-
-
-
-
