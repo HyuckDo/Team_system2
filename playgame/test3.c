@@ -327,7 +327,7 @@ int main(void){
 	
 	int num;
 
-
+while(1){
                 printf("======= Game World ========\n");
                 printf("1.Game Start\n");
                 printf("2.Explain Game\n");
@@ -492,6 +492,7 @@ endwin();
 			break;
 		
 	}
+}
 
 	return 0;
 }
